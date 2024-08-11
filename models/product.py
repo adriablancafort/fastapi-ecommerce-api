@@ -7,3 +7,4 @@ class Product(SQLModel, table=True):
     description: str
     price: float
     units_in_stock: int
+    thumbnail_url: str
