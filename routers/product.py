@@ -26,7 +26,7 @@ async def read_products(
 ):
     products = session.exec(select(Product).offset(offset).limit(limit)).all()
     if not products:
-        raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=404, detail="Not found")
     return products
 
 
@@ -38,7 +38,7 @@ async def read_product(
 ):
     product = session.get(Product, product_id)
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=404, detail="Not found")
     return product
 
 
@@ -46,7 +46,7 @@ async def read_product(
 def update_product(*, session: Session = Depends(get_session), product_id: int, product: Product):
     db_product = session.get(Product, product_id)
     if not db_product:
-        raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=404, detail="Not found")
     product_data = product.model_dump(exclude_unset=True)
     for key, value in product_data.items():
         setattr(db_product, key, value)
@@ -63,7 +63,7 @@ async def delete_product(
 ):
     product = session.get(Product, product_id)
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=404, detail="Not found")
     session.delete(product)
     session.commit()
     return {"ok": True}
