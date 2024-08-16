@@ -22,7 +22,7 @@ async def read_products(
     *,
     session: Session = Depends(get_session),
     offset: int = 0,
-    limit: int = Query(default=100, le=100),
+    limit: int = Query(default=10, le=10),
 ):
     products = session.exec(select(Product).offset(offset).limit(limit)).all()
     if not products:
